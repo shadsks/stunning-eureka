@@ -1,0 +1,128 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-background: #000000;
+  --color-foreground: #ffffff;
+  --color-lime: #d7ff00;
+  --color-ink: #000000;
+  --color-paper: #e6e6e6;
+
+  --font-sans: var(--font-sans), "Helvetica Neue", Arial, sans-serif;
+  --font-mono: var(--font-mono), ui-monospace, monospace;
+  --font-display: var(--font-display), "Arial Black", sans-serif;
+}
+
+@layer base {
+  * {
+    border-color: rgba(255, 255, 255, 0.14);
+  }
+  html {
+    font-family: var(--font-sans);
+    background: #000;
+    -webkit-font-smoothing: antialiased;
+  }
+  body {
+    background: #000;
+    color: #fff;
+    overflow-x: hidden;
+  }
+  ::selection {
+    background: #d7ff00;
+    color: #000;
+  }
+}
+
+@utility font-display {
+  font-family: var(--font-display);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 0.86;
+}
+
+@utility font-fragment {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* Display heading sizing — fluid */
+.display-xl {
+  font-size: clamp(3.25rem, 11vw, 11rem);
+}
+.display-lg {
+  font-size: clamp(2.5rem, 8.5vw, 8.5rem);
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Line-by-line clip reveal for display headings */
+.line-reveal > span {
+  display: block;
+  overflow: hidden;
+}
+.line-reveal > span > span {
+  display: block;
+  transform: translateY(105%);
+  transition: transform 0.95s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.line-reveal.is-visible > span > span {
+  transform: none;
+}
+.line-reveal.is-visible > span:nth-child(2) > span {
+  transition-delay: 0.08s;
+}
+.line-reveal.is-visible > span:nth-child(3) > span {
+  transition-delay: 0.16s;
+}
+.line-reveal.is-visible > span:nth-child(4) > span {
+  transition-delay: 0.24s;
+}
+
+/* Card slide-in from right */
+.slide-in {
+  opacity: 0;
+  transform: translateX(60px);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.slide-in.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Infinite marquee */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.animate-marquee {
+  animation: marquee 28s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .slide-in,
+  .line-reveal > span > span {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+  .animate-marquee {
+    animation: none;
+  }
+}
